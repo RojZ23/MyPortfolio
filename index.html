@@ -174,6 +174,12 @@
     .tech { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1.1rem; padding-top: .95rem; border-top: 1px dashed rgba(255,255,255,.12); }
     .tech span { font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: #9fd8ff; background: rgba(79,140,255,.12); padding: .2rem .65rem; border-radius: 6px; }
 
+    .proj-links { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
+    .proj-links a { display: inline-flex; align-items: center; gap: .45rem; text-decoration: none; font-size: .8rem; font-weight: 600; padding: .4rem .95rem; border-radius: 999px; background: var(--glass); border: 1px solid var(--glass-brd); color: #fff; transition: transform .25s, border-color .25s, background .25s; }
+    .proj-links a:hover { transform: translateY(-2px); border-color: var(--cyan); background: rgba(56,225,255,.12); }
+    .proj-links a.demo i { color: var(--yt); }
+    .proj-links a.code i { color: var(--cyan); }
+
     /* MEDIA */
     .media-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; perspective: 1200px; }
     .media-card { display: flex; flex-direction: column; text-decoration: none; }
@@ -325,7 +331,7 @@
     </div>
   </section>
 
-  <!-- PROJECTS -->
+    <!-- PROJECTS -->
   <section id="projects">
     <div class="section-head reveal">
       <div class="kicker">work</div>
@@ -335,56 +341,67 @@
     <div class="grid">
 
       <article class="card fx reveal">
-        <div class="card-top"><div class="icon-badge"><i class="fas fa-book-open"></i></div><h3>BookEx: Book Marketplace Platform</h3></div>
+        <div class="card-top"><div class="icon-badge"><i class="fas fa-book-open"></i></div><h3>BookEx: Full-Stack Book Marketplace Platform</h3></div>
         <div class="meta"><span>Nov – Dec 2025</span><span>CS3337 Software Engineering</span></div>
-        <p>Full-stack Django platform for buying, selling, and discovering books, with user roles and tiered subscriptions (Free, Bronze, Silver, Gold) that unlock exclusive listings.</p>
+        <p>Full-stack Django platform for buying, selling, and discovering books, with user roles (Regular, Writer) and tiered subscriptions (Free, Bronze, Silver, Gold) that control access to exclusive listings.</p>
         <ul>
-          <li>Modeled users, profiles, books, ratings, comments, carts, and favorites; built tier-based visibility and filtered search by title, rating, and price.</li>
-          <li>Developed an AI recommendation endpoint that ranks books from on-site ratings and comments, tailored to each user's filters and permissions.</li>
-          <li>Built a floating AI chatbot answering natural-language questions about books, tiers, and site features using only BookEx data.</li>
+          <li>Modeled users, profiles, books, ratings, comments, carts, and favorites in Django.</li>
+          <li>Implemented tier-based visibility, filtered search by title, rating, and price, a cart and checkout flow, and book ratings and comments.</li>
+          <li>Developed an AI recommendation endpoint that ranks books from on-site rating and comment data, tailored to each user's active filters and permissions.</li>
+          <li>Built a floating AI chatbot using an API integration that answers natural-language questions about books, tiers, and site features through asynchronous requests, using only BookEx data for context.</li>
+          <li>Built the frontend with Django templates, HTML, CSS, and JavaScript, including a shared base layout and styled book listings with star ratings, comment counts, and exclusivity badges.</li>
         </ul>
-        <div class="tech"><span>Django</span><span>Python</span><span>JavaScript</span><span>AI API</span></div>
+        <div class="tech"><span>Django</span><span>Python</span><span>JavaScript</span><span>HTML/CSS</span><span>AI API</span></div>
+        <div class="proj-links">
+          <a class="demo" href="https://youtu.be/SH-DAe5dfbE" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i> Video Demo</a>
+          <a class="code" href="https://github.com/RojZ23/bookEx2" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub Repo</a>
+        </div>
       </article>
 
       <article class="card fx reveal" style="--d:.1s">
         <div class="card-top"><div class="icon-badge"><i class="fas fa-brain"></i></div><h3>AI Study Guide Generator</h3></div>
         <div class="meta"><span>Aug – Dec 2025</span><span>CS3220 Web Design &amp; Development</span></div>
-        <p>Spring Boot application that converts raw study notes into AI-generated summaries, key terms, quizzes, and flashcards.</p>
+        <p>Spring Boot web application that converts raw study notes into AI-generated summaries, key terms, quizzes, and flashcards.</p>
         <ul>
-          <li>Integrated the OpenAI Chat Model API with tailored prompts to generate study content and automate quiz creation.</li>
-          <li>Implemented authentication, session management, and JPA persistence across User, StudyGuide, Quiz, and Flashcard entities.</li>
-          <li>Built personalized dashboards with study materials, quizzes, and performance statistics using JTE templates.</li>
+          <li>Used Java and JPA for database persistence across User, StudyGuide, Quiz, and Flashcard entities.</li>
+          <li>Integrated the OpenAI Chat Model API with tailored prompts to dynamically generate study content, automate quiz creation, and track user progress.</li>
+          <li>Implemented controllers for user authentication, session management, registration, login, study guide management, and quiz generation.</li>
+          <li>Built server-side rendered views with JTE templates so users can upload or type notes, select AI output detail levels, and view personalized dashboards with study materials, quizzes, and performance statistics.</li>
         </ul>
-        <div class="tech"><span>Java</span><span>Spring Boot</span><span>JPA</span><span>OpenAI API</span></div>
+        <div class="tech"><span>Java</span><span>Spring Boot</span><span>JPA</span><span>JTE</span><span>OpenAI API</span></div>
+        <div class="proj-links">
+          <a class="demo" href="https://youtu.be/Sor69hm4FLg" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i> Video Demo</a>
+          <a class="code" href="https://github.com/RojZ23/AIStudyGuide" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub Repo</a>
+        </div>
       </article>
 
       <article class="card fx reveal" style="--d:.2s">
         <div class="card-top"><div class="icon-badge"><i class="fas fa-gamepad"></i></div><h3>Resurrection: Second Lives</h3></div>
-        <div class="meta"><span>Sep 2024 – Present</span><span>Project Lead</span></div>
+        <div class="meta"><span>Sep 2024 – Present</span><span>Unreal Engine 5</span><span>Project Lead</span></div>
         <p>Story-driven survival horror game set in a quarantined city.</p>
         <ul>
-          <li>Implementing AI-driven enemy behavior, environmental interaction systems, and real-time lighting.</li>
-          <li>Designed narrative and technical systems together for cinematic storytelling alongside gameplay.</li>
-          <li>Leading voice actors and concept artists. Follow progress on <a href="https://www.instagram.com/resurrectedones" target="_blank" rel="noopener noreferrer">Instagram</a>.</li>
+          <li>Developing AI-driven enemy behavior, environmental interaction systems, and real-time lighting.</li>
+          <li>Designed narrative and technical systems together to deliver cinematic storytelling alongside gameplay mechanics.</li>
+          <li>Leading a team of voice actors and concept artists. Follow progress on <a href="https://www.instagram.com/resurrectedones" target="_blank" rel="noopener noreferrer">Instagram</a>.</li>
         </ul>
-        <div class="tech"><span>Unreal Engine 5</span><span>Game AI</span><span>Narrative Design</span></div>
+        <div class="tech"><span>Unreal Engine 5</span><span>Game AI</span><span>Narrative Design</span><span>Lighting</span></div>
       </article>
 
       <article class="card fx reveal">
         <div class="card-top"><div class="icon-badge"><i class="fas fa-globe"></i></div><h3>SecondLives ARG Website</h3></div>
-        <div class="meta"><span>Aug 2024 – Present</span><span>Transmedia</span></div>
-        <p>Transmedia storytelling website supporting an original alternate-reality game.</p>
+        <div class="meta"><span>Aug 2024 – Present</span><span>Alternate Reality Game</span></div>
+        <p>Transmedia storytelling website supporting an original alternate-reality game (ARG).</p>
         <ul>
-          <li>Integrates puzzles, video, and social media into an immersive fictional narrative.</li>
-          <li>Designed content architecture blending real-world presentation with fictional world-building across platforms.</li>
+          <li>Building the site to integrate puzzles, video, and social media into an immersive fictional narrative.</li>
+          <li>Designed content architecture that blends real-world presentation with fictional world-building across multiple platforms.</li>
         </ul>
-        <div class="tech"><span>Web Development</span><span>Content Architecture</span></div>
+        <div class="tech"><span>Web Development</span><span>Content Architecture</span><span>Transmedia</span></div>
       </article>
 
       <article class="card fx reveal" style="--d:.1s">
         <div class="card-top"><div class="icon-badge"><i class="fas fa-robot"></i></div><h3>Raspberry Pi + Python Robot</h3></div>
-        <div class="meta"><span>Jul – Dec 2021</span><span>Robotics</span></div>
-        <p>Fully mobile, programmable robot built through a hands-on robotics curriculum.</p>
+        <div class="meta"><span>Jul – Dec 2021</span><span>42 Electronics · Robotics</span></div>
+        <p>Fully mobile, programmable robot built in Python on Raspberry Pi through a progressive, hands-on robotics curriculum.</p>
         <ul>
           <li>Implemented camera-based obstacle detection so the robot navigates race tracks autonomously.</li>
         </ul>
@@ -395,10 +412,10 @@
         <div class="card-top"><div class="icon-badge"><i class="fas fa-code"></i></div><h3>Java Algorithm Projects</h3></div>
         <div class="meta"><span>Oct 2020</span><span>Java</span></div>
         <ul>
-          <li><strong>Maze Runner:</strong> recursion and backtracking pathfinding that handles dead ends and directional decisions.</li>
-          <li><strong>Crypto:</strong> cipher-based text encryption and decryption tool demonstrating foundational security principles.</li>
+          <li><strong>Maze Runner:</strong> developed a pathfinding algorithm using recursion and backtracking to navigate a predefined maze and reach the exit, applying control-flow and algorithmic problem-solving to handle dead ends and directional decisions.</li>
+          <li><strong>Crypto:</strong> implemented cipher-based encryption and decryption algorithms to securely transform and restore text, applying string manipulation, control structures, and modular design to demonstrate foundational cybersecurity principles.</li>
         </ul>
-        <div class="tech"><span>Java</span><span>Recursion</span><span>Algorithms</span></div>
+        <div class="tech"><span>Java</span><span>Recursion</span><span>Backtracking</span><span>Cryptography</span></div>
       </article>
 
     </div>
