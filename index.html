@@ -227,6 +227,11 @@
     .cert small { display: block; font-size: .76rem; color: var(--muted); font-weight: 500; margin-top: .1rem; }
     .cert:hover { transform: translateX(6px); border-color: rgba(155,107,255,.55); background: rgba(155,107,255,.1); }
     .cert:hover i { transform: rotate(360deg); color: var(--cyan); }
+    .cert-group { margin-bottom: 2.2rem; }
+    .cert-group h3 { font-size: 1.05rem; display: flex; align-items: center; gap: .6rem; margin-bottom: 1rem; }
+    .cert-group h3 i { color: var(--cyan); }
+    .cert-group h3 span { font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: var(--muted); font-weight: 500; padding: .15rem .6rem; border-radius: 999px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.06); }
+    
 
     /* CONTACT */
     .contact { position: relative; overflow: hidden; text-align: center; padding: 3.4rem 2rem; border-radius: 1.6rem; border: 1px solid var(--glass-brd);
@@ -581,30 +586,42 @@
     </div>
   </section>
 
-    <!-- CERTIFICATIONS -->
+  <!-- CERTIFICATIONS -->
   <section id="certifications">
     <div class="section-head reveal">
       <div class="kicker">credentials</div>
       <h2>Certifications</h2>
     </div>
-    <div class="certs">
-      <!-- Epic Games -->
-      <div class="cert reveal"><i class="fas fa-certificate"></i><div><b>User Interface in Game Design</b><small>Epic Games · Jul 2026</small></div></div>
-      <div class="cert reveal" style="--d:.05s"><i class="fas fa-certificate"></i><div><b>Fundamentals of Level Design with Unreal Engine</b><small>Epic Games · May 2026</small></div></div>
-      <div class="cert reveal"><i class="fas fa-certificate"></i><div><b>Unreal Engine: Intro to Game Design</b><small>Epic GamesEpic Games · Jul 2025</small></div></div>
-      <div class="cert reveal" style="--d:.05s"><i class="fas fa-certificate"></i><div><b>Unreal Engine Fundamentals</b><small>Epic Games</small></div></div>
 
-      <!-- Code With Mosh -->
-      <div class="cert reveal" style="--d:.1s"><i class="fas fa-certificate"></i><div><b>Ultimate Java Part 3: Advanced Topics</b><small>Code With Mosh · Dec 2020</small></div></div>
-      <div class="cert reveal"><i class="fas fa-certificate"></i><div><b>Ultimate Java Part 2: Object-Oriented Programming</b><small>Code With Mosh · Aug 2020</small></div></div>
-      <div class="cert reveal" style="--d:.05s"><i class="fas fa-certificate"></i><div><b>Ultimate Java Part 1: Fundamentals</b><small>Code With Mosh · Jan 2020</small></div></div>
-      <div class="cert reveal" style="--d:.1s"><i class="fas fa-certificate"></i><div><b>Complete Python Mastery</b><small>Code With Mosh</small></div></div>
+    <!-- Epic Games -->
+    <div class="cert-group reveal">
+      <h3><i class="fas fa-gamepad"></i> Epic Games <span>4</span></h3>
+      <div class="certs">
+        <div class="cert"><i class="fas fa-certificate"></i><div><b>User Interface in Game Design</b><small>Jul 2026</small></div></div>
+        <div class="cert"><i class="fas fa-certificate"></i><div><b>Fundamentals of Level Design with Unreal Engine</b><small>May 2026</small></div></div>
+        <div class="cert"><i class="fas fa-certificate"></i><div><b>Unreal Engine: Intro to Game Design</b><small>Jul 2025</small></div></div>
+        <div class="cert"><i class="fas fa-certificate"></i><div><b>Unreal Engine Fundamentals</b><small>Epic Games</small></div></div>
+      </div>
+    </div>
 
-      <!-- edX -->
-      <div class="cert reveal"><i class="fas fa-certificate"></i><div><b>edX Verified Certificate: Learn to Program in Java</b><small>edX · Microsoft · Sep 2020</small></div></div>
+    <!-- Code With Mosh -->
+    <div class="cert-group reveal">
+      <h3><i class="fas fa-code"></i> Code With Mosh <span>4</span></h3>
+      <div class="certs">
+        <div class="cert"><i class="fas fa-certificate"></i><div><b>Ultimate Java Part 3: Advanced Topics</b><small>Dec 2020</small></div></div>
+        <div class="cert"><i class="fas fa-certificate"></i><div><b>Ultimate Java Part 2: Object-Oriented Programming</b><small>Aug 2020</small></div></div>
+        <div class="cert"><i class="fas fa-certificate"></i><div><b>Ultimate Java Part 1: Fundamentals</b><small>Jan 2020</small></div></div>
+        <div class="cert"><i class="fas fa-certificate"></i><div><b>Complete Python Mastery</b><small>Code With Mosh</small></div></div>
+      </div>
+    </div>
 
-      <!-- Oracle University -->
-      <div class="cert reveal" style="--d:.05s"><i class="fas fa-certificate"></i><div><b>Java Explorer Badge</b><small>Oracle University</small></div></div>
+    <!-- edX + Oracle -->
+    <div class="cert-group reveal">
+      <h3><i class="fas fa-graduation-cap"></i> edX &amp; Oracle University <span>2</span></h3>
+      <div class="certs">
+        <div class="cert"><i class="fas fa-certificate"></i><div><b>edX Verified Certificate: Learn to Program in Java</b><small>edX · Microsoft · Sep 2020</small></div></div>
+        <div class="cert"><i class="fas fa-certificate"></i><div><b>Java Explorer Badge</b><small>Oracle University</small></div></div>
+      </div>
     </div>
   </section>
 
