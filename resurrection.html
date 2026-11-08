@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resurrection: Second Lives · Rojina Zalzar</title>
+  <meta name="description" content="Resurrection: Second Lives is a story-driven survival horror game built in Unreal Engine 5, led by Rojina Zalzar. Watch development tests, map showcases, and mechanics demos.">
+  <meta name="theme-color" content="#070b16">
+  <script>document.documentElement.classList.add('js');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --bg: #070b16; --glass: rgba(255,255,255,0.045); --glass-brd: rgba(255,255,255,0.10);
+      --text: #e6ecf7; --muted: #8fa0ba; --cyan: #38e1ff; --blue: #4f8cff; --violet: #9b6bff; --pink: #ff5fb5;
+      --yt: #ff3b30; --ig: #e1306c;
+      --grad: linear-gradient(90deg, var(--cyan), var(--blue) 45%, var(--violet));
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden; position: relative; }
+    a { color: inherit; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 1.5rem; position: relative; z-index: 2; }
+
+    .aurora { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+    .aurora i { position: absolute; border-radius: 50%; filter: blur(110px); opacity: .28; animation: drift 22s ease-in-out infinite alternate; }
+    .aurora i:nth-child(1) { width: 520px; height: 520px; background: var(--blue); top: -140px; left: -120px; }
+    .aurora i:nth-child(2) { width: 460px; height: 460px; background: var(--violet); top: 35%; right: -160px; animation-duration: 28s; }
+    .aurora i:nth-child(3) { width: 420px; height: 420px; background: var(--pink); bottom: -160px; left: 25%; animation-duration: 32s; opacity: .14; }
+    @keyframes drift { to { transform: translate(80px, 60px) scale(1.15); } }
+    body::after { content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 56px 56px; mask-image: radial-gradient(ellipse at 50% 20%, #000 20%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse at 50% 20%, #000 20%, transparent 75%); }
+
+    #progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; background: var(--grad); z-index: 100; box-shadow: 0 0 12px var(--cyan); }
+
+    nav { position: sticky; top: 0; z-index: 90; background: rgba(7,11,22,.6); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--glass-brd); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 66px; }
+    .brand { font-weight: 800; text-decoration: none; letter-spacing: -0.02em; font-size: 1.1rem; }
+    .brand span { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .nav-links { display: flex; gap: .3rem; list-style: none; }
+    .nav-links a { text-decoration: none; font-size: .9rem; font-weight: 500; color: var(--muted); padding: .45rem .85rem; border-radius: 999px; transition: color .25s, background .25s; }
+    .nav-links a:hover { color: #fff; }
+    .nav-links a.back { color: #fff; background: rgba(79,140,255,.18); box-shadow: inset 0 0 0 1px rgba(79,140,255,.45); }
+
+    /* HERO */
+    header.hero { position: relative; padding: 6rem 0 4rem; }
+    .pill { display: inline-flex; align-items: center; gap: .55rem; font-size: .8rem; font-weight: 600; letter-spacing: .06em; padding: .4rem 1rem; border-radius: 999px; background: var(--glass); border: 1px solid var(--glass-brd); color: #bfe9ff; }
+    .pill .dot { width: 8px; height: 8px; border-radius: 50%; background: #3dff9a; box-shadow: 0 0 0 0 rgba(61,255,154,.7); animation: ping 2s infinite; }
+    @keyframes ping { 70% { box-shadow: 0 0 0 10px rgba(61,255,154,0); } 100% { box-shadow: 0 0 0 0 rgba(61,255,154,0); } }
+    .hero h1 { font-size: clamp(2.6rem, 7vw, 4.6rem); line-height: 1.05; letter-spacing: -0.04em; margin: 1.1rem 0 .9rem; font-weight: 800; }
+    .grad-text { background: linear-gradient(90deg, var(--cyan), var(--blue), var(--violet), var(--pink), var(--cyan)); background-size: 250% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shimmer 7s linear infinite; }
+    @keyframes shimmer { to { background-position: 250% 0; } }
+    .tagline { font-size: clamp(1.05rem, 2.2vw, 1.35rem); color: #cfdcf2; font-weight: 500; max-width: 720px; }
+    .tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.3rem; }
+    .tags span { font-size: .78rem; font-weight: 600; padding: .3rem .9rem; border-radius: 999px; background: rgba(255,255,255,.06); color: var(--muted); border: 1px solid rgba(255,255,255,.08); }
+    .btn-row { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2rem; }
+    .btn { position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: .6rem; text-decoration: none; padding: .8rem 1.5rem; border-radius: 999px; font-weight: 600; font-size: .93rem; transition: transform .25s, box-shadow .25s, background .25s; }
+    .btn:hover { transform: translateY(-3px); }
+    .btn-primary { background: var(--grad); color: #04111f; box-shadow: 0 10px 30px -10px rgba(79,140,255,.8); }
+    .btn-ghost { background: var(--glass); color: #fff; border: 1px solid var(--glass-brd); }
+    .btn-ghost:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.25); }
+
+    /* SECTIONS */
+    section { padding: 4.5rem 0 1rem; }
+    .section-head { margin-bottom: 2.2rem; }
+    .kicker { font-family: 'JetBrains Mono', monospace; font-size: .8rem; color: var(--cyan); letter-spacing: .08em; }
+    .kicker::before { content: "// "; opacity: .6; }
+    .section-head h2 { font-size: clamp(1.9rem, 4vw, 2.6rem); letter-spacing: -0.03em; font-weight: 800; margin-top: .2rem; display: inline-block; }
+    .section-head h2::after { content: ""; display: block; height: 4px; width: 56px; margin-top: .5rem; border-radius: 4px; background: var(--grad); box-shadow: 0 0 14px var(--blue); }
+    .section-head p { color: var(--muted); max-width: 640px; margin-top: .8rem; }
+
+    .about-box { position: relative; padding: 2rem 2.2rem; border-radius: 1.3rem; background: var(--glass); border: 1px solid var(--glass-brd); font-size: 1.05rem; color: #cdd8ea; overflow: hidden; }
+    .about-box::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: linear-gradient(var(--cyan), var(--violet)); box-shadow: 0 0 18px var(--blue); }
+    .about-box p + p { margin-top: 1rem; }
+
+    .facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1.5rem; }
+    .fact { background: var(--glass); border: 1px solid var(--glass-brd); border-radius: 1.1rem; padding: 1.1rem 1.2rem; }
+    .fact small { display: block; font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: var(--cyan); letter-spacing: .06em; text-transform: uppercase; }
+    .fact b { display: block; margin-top: .25rem; font-size: 1rem; }
+
+    /* FEATURES */
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+    .feat { background: var(--glass); border: 1px solid var(--glass-brd); border-radius: 1.3rem; padding: 1.6rem; transition: transform .3s, border-color .3s, box-shadow .3s; }
+    .feat:hover { transform: translateY(-5px); border-color: rgba(56,225,255,.45); box-shadow: 0 24px 50px -24px rgba(56,140,255,.55); }
+    .feat .ic { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; color: var(--cyan); font-size: 1.15rem; margin-bottom: .9rem; background: linear-gradient(145deg, rgba(56,225,255,.16), rgba(155,107,255,.16)); border: 1px solid rgba(255,255,255,.12); }
+    .feat h3 { font-size: 1.1rem; margin-bottom: .4rem; }
+    .feat p { font-size: .93rem; color: #aab8cf; }
+
+    /* VIDEOS */
+    .videos { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+    .video { background: var(--glass); border: 1px solid var(--glass-brd); border-radius: 1.3rem; overflow: hidden; transition: transform .3s, border-color .3s, box-shadow .3s; display: flex; flex-direction: column; }
+    .video:hover { transform: translateY(-5px); border-color: rgba(255,59,48,.55); box-shadow: 0 24px 50px -24px var(--yt); }
+    .player { position: relative; aspect-ratio: 16 / 9; background: #000; cursor: pointer; border: 0; width: 100%; display: block; padding: 0; }
+    .player img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: .9; transition: opacity .3s, transform .5s; }
+    .video:hover .player img { opacity: 1; transform: scale(1.04); }
+    .player .play { position: absolute; inset: 0; display: grid; place-items: center; }
+    .player .play i { width: 62px; height: 62px; border-radius: 50%; display: grid; place-items: center; font-size: 1.3rem; color: #fff; background: rgba(255,59,48,.92); box-shadow: 0 0 30px rgba(255,59,48,.6); padding-left: 4px; transition: transform .3s; }
+    .video:hover .play i { transform: scale(1.12); }
+    .player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .v-body { padding: 1.1rem 1.3rem 1.3rem; display: flex; flex-direction: column; gap: .35rem; flex-grow: 1; }
+    .v-body h3 { font-size: 1.02rem; line-height: 1.35; }
+    .vdate { font-family: 'JetBrains Mono', monospace; font-size: .74rem; color: var(--cyan); }
+    .vdate:empty { display: none; }
+    .vdesc { font-size: .88rem; color: #aab8cf; }
+    .v-body a { margin-top: auto; padding-top: .5rem; font-size: .84rem; font-weight: 600; text-decoration: none; color: #fff; display: inline-flex; align-items: center; gap: .45rem; }
+    .v-body a i { color: var(--yt); }
+
+    /* FEATURED VIDEO */
+    .featured { display: grid; grid-template-columns: 1.35fr 1fr; gap: 0; background: var(--glass); border: 1px solid var(--glass-brd); border-radius: 1.4rem; overflow: hidden; margin-bottom: 1.8rem; transition: border-color .3s, box-shadow .3s; }
+    .featured:hover { border-color: rgba(56,225,255,.45); box-shadow: 0 24px 50px -24px rgba(56,140,255,.55); }
+    .featured .player { aspect-ratio: 16 / 9; height: 100%; min-height: 100%; }
+    .f-body { padding: 1.8rem 2rem; display: flex; flex-direction: column; gap: .6rem; justify-content: center; }
+    .f-badge { align-self: flex-start; font-family: 'JetBrains Mono', monospace; font-size: .72rem; letter-spacing: .06em; color: var(--cyan); padding: .2rem .7rem; border-radius: 999px; background: rgba(56,225,255,.1); border: 1px solid rgba(56,225,255,.3); }
+    .f-body h3 { font-size: 1.5rem; letter-spacing: -0.02em; line-height: 1.2; }
+    .f-body p { font-size: .94rem; color: #aab8cf; }
+    .f-list { list-style: none; margin-top: .2rem; }
+    .f-list li { font-size: .9rem; color: #aab8cf; padding-left: 1.25rem; position: relative; margin-bottom: .35rem; }
+    .f-list li::before { content: "▹"; position: absolute; left: 0; color: var(--cyan); }
+    .f-body a.yt { margin-top: .5rem; align-self: flex-start; font-size: .84rem; font-weight: 600; text-decoration: none; color: #fff; display: inline-flex; align-items: center; gap: .45rem; }
+    .f-body a.yt i { color: var(--yt); }
+    @media (max-width: 900px) { .featured { grid-template-columns: 1fr; } .featured .player { height: auto; } }
+
+    /* TEAM / FOLLOW */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .panel { background: var(--glass); border: 1px solid var(--glass-brd); border-radius: 1.3rem; padding: 1.8rem; }
+    .panel h3 { font-size: 1.15rem; margin-bottom: .6rem; display: flex; gap: .6rem; align-items: center; }
+    .panel h3 i { color: var(--cyan); }
+    .panel p { color: #aab8cf; font-size: .95rem; }
+    .panel .btn-row { margin-top: 1.2rem; }
+
+    .contact { position: relative; overflow: hidden; text-align: center; padding: 3.2rem 2rem; border-radius: 1.6rem; border: 1px solid var(--glass-brd); background: linear-gradient(135deg, rgba(79,140,255,.18), rgba(155,107,255,.18)); }
+    .contact h2 { font-size: clamp(1.7rem, 4vw, 2.4rem); letter-spacing: -0.03em; font-weight: 800; }
+    .contact p { color: var(--muted); max-width: 560px; margin: .7rem auto 1.6rem; }
+    .contact .btn-row { justify-content: center; margin-top: 0; }
+
+    footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 3.5rem 0 3rem; position: relative; z-index: 2; }
+
+    .js .reveal { opacity: 0; transform: translateY(34px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0s); }
+    .js .reveal.in { opacity: 1; transform: none; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; border-radius: 8px; }
+
+    @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } .facts { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .nav-links li:not(:last-child) { display: none; } header.hero { padding: 4rem 0 3rem; } .videos { grid-template-columns: 1fr; } }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } .js .reveal { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+
+<nav aria-label="Main navigation">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html">Rojina<span>.Zalzar</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#devlog">Dev Log</a></li>
+      <li><a href="#follow">Follow</a></li>
+      <li><a class="back" href="index.html#projects"><i class="fas fa-arrow-left"></i> Portfolio</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="pill"><span class="dot"></span> In active development · Sep 2024 – Present</span>
+    <h1><span class="grad-text">Resurrection:</span> Second Lives</h1>
+    <p class="tagline">A story-driven survival horror game set in a quarantined city, built in Unreal Engine 5 with cinematic storytelling, AI-driven enemies, and real-time lighting.</p>
+    <div class="tags"><span>Survival Horror</span><span>Story-Driven</span><span>Unreal Engine 5.7</span><span>Project Lead</span></div>
+    <div class="btn-row">
+      <a class="btn btn-primary" href="#devlog"><i class="fas fa-play"></i> Watch the Dev Log</a>
+      <a class="btn btn-ghost" href="https://www.youtube.com/@DeadSociety944" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i> Dead Society Channel</a>
+      <a class="btn btn-ghost" href="https://www.instagram.com/resurrectedones" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i> Instagram</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ABOUT -->
+  <section id="about" style="padding-top:2rem;">
+    <div class="section-head reveal">
+      <div class="kicker">about</div>
+      <h2>The Game</h2>
+    </div>
+    <div class="about-box reveal">
+      <p>Resurrection: Second Lives is a story-driven survival horror game set in a quarantined city. It pairs atmospheric, cinematic storytelling with tense survival gameplay, and the narrative and technical systems were designed together so the story and the mechanics support each other.</p>
+      <p>I lead the project and develop it in Unreal Engine 5. Development began in September 2024, and the project was upgraded from Unreal Engine 5.4 to 5.7 along the way. I also lead a team of voice actors and concept artists.</p>
+    </div>
+    <div class="facts reveal">
+      <div class="fact"><small>Genre</small><b>Survival Horror</b></div>
+      <div class="fact"><small>Engine</small><b>Unreal Engine 5.7</b></div>
+      <div class="fact"><small>Started</small><b>Sep 2024</b></div>
+      <div class="fact"><small>My role</small><b>Project Lead</b></div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="section-head reveal">
+      <div class="kicker">systems</div>
+      <h2>What I'm Building</h2>
+    </div>
+    <div class="cards">
+      <div class="feat reveal"><div class="ic"><i class="fas fa-brain"></i></div><h3>AI-Driven Enemy Behavior</h3><p>Enemy AI that drives the tension and threat of the survival experience.</p></div>
+      <div class="feat reveal" style="--d:.08s"><div class="ic"><i class="fas fa-hand-pointer"></i></div><h3>Environmental Interaction</h3><p>Systems that let the player interact with the quarantined city around them.</p></div>
+      <div class="feat reveal" style="--d:.16s"><div class="ic"><i class="fas fa-lightbulb"></i></div><h3>Real-Time Lighting</h3><p>Dynamic lighting used to build mood, atmosphere, and cinematic presentation.</p></div>
+      <div class="feat reveal"><div class="ic"><i class="fas fa-film"></i></div><h3>Narrative &amp; Technical Design</h3><p>Story and systems designed together to deliver cinematic storytelling alongside gameplay mechanics.</p></div>
+      <div class="feat reveal" style="--d:.08s"><div class="ic"><i class="fas fa-people-group"></i></div><h3>Team Leadership</h3><p>Leading voice actors and concept artists and coordinating audio and visual direction.</p></div>
+      <div class="feat reveal" style="--d:.16s"><div class="ic"><i class="fas fa-globe"></i></div><h3>Transmedia Storytelling</h3><p>The story also extends into the SecondLives alternate-reality game website, with puzzles, video, and social media.</p></div>
+    </div>
+  </section>
+
+  <!-- DEV LOG -->
+  <section id="devlog">
+    <div class="section-head reveal">
+      <div class="kicker">dev log</div>
+      <h2>Development Videos</h2>
+      <p>Tests, map showcases, and mechanics demos from throughout development, newest first. Click a thumbnail to play it here.</p>
+    </div>
+        <article class="featured reveal">
+      <button class="player" data-id="xDyiyqHvRBg" aria-label="Play: One year of work">
+        <img src="https://img.youtube.com/vi/xDyiyqHvRBg/hqdefault.jpg" alt="" loading="lazy"><span class="play"><i class="fas fa-play"></i></span>
+      </button>
+      <div class="f-body">
+        <span class="f-badge">FEATURED · YEAR IN REVIEW</span>
+        <h3>One year of work</h3>
+        <p>A look back at everything built on Resurrection: Second Lives over the past year, from the first mechanics tests to finished maps and new character models.</p>
+        <ul class="f-list">
+          <li>Core mechanics: radar and gun animation systems, then all mechanics running together in one prototype.</li>
+          <li>Environments: completed map teasers and a full map showcase.</li>
+          <li>Characters: new character models, animations, and clothing materials.</li>
+          <li>Engine: upgraded the project from Unreal Engine 5.4 to 5.7.</li>
+        </ul>
+        <a class="yt" href="https://youtu.be/xDyiyqHvRBg" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i> Watch on YouTube</a>
+      </div>
+    </article>
+
+    <div class="videos">
+
+      <article class="video reveal">
+        <button class="player" data-id="HzlGvqv7dVE" aria-label="Play: Testing clothing material, animation, new models, and more">
+          <img src="https://img.youtube.com/vi/HzlGvqv7dVE/hqdefault.jpg" alt="" loading="lazy"><span class="play"><i class="fas fa-play"></i></span>
+        </button>
+        <div class="v-body"><h3>Testing clothing material, animation, new models, and more</h3><span class="vdate">Sep 12, 2026 · 3:32</span>
+          <p class="vdesc">Testing clothing materials, character animation, and new models together in the game.</p>
+          <a href="https://youtu.be/HzlGvqv7dVE" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i> Watch on YouTube</a></div>
+      </article>
+
+      <article class="video reveal" style="--d:.06s">
+        <button class="player" data-id="joi6Klqo4Eo" aria-label="Play: Game's map showcase">
+          <img src="https://img.youtube.com/vi/joi6Klqo4Eo/hqdefault.jpg" alt="" loading="lazy"><span class="play"><i class="fas fa-play"></i></span>
+        </button>
+        <div class="v-body"><h3>Game's map showcase</h3><span class="vdate">May 10, 2026 · 4:34</span>
+          <p class="vdesc">A showcase of the game's map built in Unreal Engine 5.</p>
+          <a href="https://youtu.be/joi6Klqo4Eo" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i> Watch on YouTube</a></div>
+      </article>
+
+      <article class="video reveal" style="--d:.12s">
+        <button class="player" data-id="UsS_skjBtf0" aria-label="Play: Testing new character models with animations">
+          <img src="https://img.youtube.com/vi/UsS_skjBtf0/hqdefault.jpg" alt="" loading="lazy"><span class="play"><i class="fas fa-play"></i></span>
+        </button>
+        <div class="v-body"><h3>Testing new character models with animations</h3><span class="vdate">May 2, 2026 · 3:49</span>
+          <p class="vdesc">Testing new character models with their animations in the engine.</p>
+          <a href="https://youtu.be/UsS_skjBtf0" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i> Watch on YouTube</a></div>
+      </article>
+
+      <article class="video reveal">
+        <button class="player" data-id="OojmQgfipNQ" aria-label="Play: Another completed map teaser">
+          <img src="https://img.youtube.com/vi/OojmQgfipNQ/hqdefault.jpg" alt="" loading="lazy"><span class="play"><i class="fas fa-play"></i></span>
+        </button>
+        <div class="v-body"><h3>Another completed map teaser</h3><span class="vdate">Oct 6, 2025 · 1:20</span>
+          <p class="vdesc">A teaser of another completed map in the game.</p>
+          <a href="https://youtu.be/OojmQgfipNQ" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i> Watch on YouTube</a></div>
+      </article>
+
+      <article class="video reveal" style="--d:.06s">
+        <button class="player" data-id="JCHBrcZ790U" aria-label="Play: Testing all game mechanics and animations all together">
+          <img src="https://img.youtube.com/vi/JCHBrcZ790U/hqdefault.jpg" alt="" loading="lazy"><span class="play"><i class="fas fa-play"></i></span>
+        </button>
+        <div class="v-body"><h3>Testing all game mechanics and animations all together</h3><span class="vdate">Oct 3, 2025 · 4:37</span>
+          <p class="vdesc">All of the game's mechanics and animations running together in one prototype.</p>
+          <a href="https://youtu.be/JCHBrcZ790U" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i> Watch on YouTube</a></div>
+      </article>
+
+      <article class="video reveal" style="--d:.12s">
+        <button class="player" data-id="RuBPJHU17l8" aria-label="Play: Cleaning and containment map teaser">
+          <img src="https://img.youtube.com/vi/RuBPJHU17l8/hqdefault.jpg" alt="" loading="lazy"><span class="play"><i class="fas fa-play"></i></span>
+        </button>
+        <div class="v-body"><h3>Cleaning and containment map teaser</h3><span class="vdate">Sep 23, 2025 · 0:54</span>
+          <p class="vdesc">A short teaser of the cleaning and containment map.</p>
+          <a href="https://youtu.be/RuBPJHU17l8" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i> Watch on YouTube</a></div>
+      </article>
+
+      <article class="video reveal">
+        <button class="player" data-id="3kNkGSXny0M" aria-label="Play: Gun mechanic and animation test">
+          <img src="https://img.youtube.com/vi/3kNkGSXny0M/hqdefault.jpg" alt="" loading="lazy"><span class="play"><i class="fas fa-play"></i></span>
+        </button>
+        <div class="v-body"><h3>Gun mechanic and animation test</h3><span class="vdate">Jul 27, 2025 · 5:19</span>
+          <p class="vdesc">Testing the gun mechanic and its animations.</p>
+          <a href="https://youtu.be/3kNkGSXny0M" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i> Watch on YouTube</a></div>
+      </article>
+
+      <article class="video reveal" style="--d:.06s">
+        <button class="player" data-id="5TnH9nnjK0Q" aria-label="Play: Radar mechanic test">
+          <img src="https://img.youtube.com/vi/5TnH9nnjK0Q/hqdefault.jpg" alt="" loading="lazy"><span class="play"><i class="fas fa-play"></i></span>
+        </button>
+        <div class="v-body"><h3>Radar mechanic test</h3><span class="vdate">Jun 26, 2025 · 2:00</span>
+          <p class="vdesc">A test of the radar mechanic.</p>
+          <a href="https://youtu.be/5TnH9nnjK0Q" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i> Watch on YouTube</a></div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- FOLLOW -->
+  <section id="follow">
+    <div class="section-head reveal">
+      <div class="kicker">community</div>
+      <h2>Follow Development</h2>
+    </div>
+    <div class="two-col">
+      <div class="panel reveal">
+        <h3><i class="fab fa-youtube"></i> Dead Society</h3>
+        <p>The game development log following the creation of Resurrection: Second Lives.</p>
+        <div class="btn-row"><a class="btn btn-ghost" href="https://www.youtube.com/@DeadSociety944" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i> Watch on YouTube</a></div>
+      </div>
+      <div class="panel reveal" style="--d:.1s">
+        <h3><i class="fab fa-instagram"></i> @resurrectedones</h3>
+        <p>Behind-the-scenes updates, concept art, and progress from the Resurrection: Second Lives team.</p>
+        <div class="btn-row"><a class="btn btn-ghost" href="https://www.instagram.com/resurrectedones" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i> Follow on Instagram</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-bottom: 2rem;">
+    <div class="contact reveal">
+      <h2>Want to talk about the <span class="grad-text">project</span>?</h2>
+      <p>Collaborations, feedback, and questions about the game are welcome.</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="mailto:rzalzar04@gmail.com"><i class="fas fa-envelope"></i> rzalzar04@gmail.com</a>
+        <a class="btn btn-ghost" href="index.html"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer><p>© 2026 Rojina Zalzar · Los Angeles, CA</p></footer>
+
+<script>
+(function () {
+  var bar = document.getElementById('progress');
+  function onScroll() {
+    var h = document.documentElement;
+    bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight || 1) * 100) + '%';
+  }
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('in'); io.unobserve(e.target);
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+
+  /* click-to-play: swaps thumbnail for the YouTube embed */
+  document.querySelectorAll('.player').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var f = document.createElement('iframe');
+      f.src = 'https://www.youtube-nocookie.com/embed/' + btn.dataset.id + '?autoplay=1&rel=0';
+      f.title = btn.getAttribute('aria-label').replace('Play: ', '');
+      f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen';
+      f.allowFullscreen = true;
+      var box = document.createElement('div');
+      box.className = 'player';
+      box.style.cursor = 'default';
+      box.appendChild(f);
+      btn.replaceWith(box);
+    });
+  });
+})();
+</script>
+</body>
+</html>
