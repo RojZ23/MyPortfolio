@@ -109,11 +109,11 @@
     .v-body a i { color: var(--yt); }
 
     /* FEATURED VIDEO */
-    .featured { display: grid; grid-template-columns: 1.35fr 1fr; gap: 0; background: var(--glass); border: 1px solid var(--glass-brd); border-radius: 1.4rem; overflow: hidden; margin-bottom: 1.8rem; transition: border-color .3s, box-shadow .3s; }
+    .featured { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: center; gap: 0; background: var(--glass); border: 1px solid var(--glass-brd); border-radius: 1.4rem; overflow: hidden; margin-bottom: 1.8rem; transition: border-color .3s, box-shadow .3s; }
     .featured:hover { border-color: rgba(56,225,255,.45); box-shadow: 0 24px 50px -24px rgba(56,140,255,.55); }
-    .featured .player { aspect-ratio: 16 / 9; height: 100%; min-height: 100%; }
+    .featured .player { aspect-ratio: 16 / 9; height: auto; align-self: center; }
     .f-body { padding: 1.8rem 2rem; display: flex; flex-direction: column; gap: .6rem; justify-content: center; }
-    .f-badge { align-self: flex-start; font-family: 'JetBrains Mono', monospace; font-size: .72rem; letter-spacing: .06em; color: var(--cyan); padding: .2rem .7rem; border-radius: 999px; background: rgba(56,225,255,.1); border: 1px solid rgba(56,225,255,.3); }
+    .f-badge { align-self: flex-start; white-space: nowrap; font-family: 'JetBrains Mono', monospace; font-size: .72rem; letter-spacing: .06em; color: var(--cyan); padding: .2rem .7rem; border-radius: 999px; background: rgba(56,225,255,.1); border: 1px solid rgba(56,225,255,.3); }
     .f-body h3 { font-size: 1.5rem; letter-spacing: -0.02em; line-height: 1.2; }
     .f-body p { font-size: .94rem; color: #aab8cf; }
     .f-list { list-style: none; margin-top: .2rem; }
@@ -121,7 +121,7 @@
     .f-list li::before { content: "▹"; position: absolute; left: 0; color: var(--cyan); }
     .f-body a.yt { margin-top: .5rem; align-self: flex-start; font-size: .84rem; font-weight: 600; text-decoration: none; color: #fff; display: inline-flex; align-items: center; gap: .45rem; }
     .f-body a.yt i { color: var(--yt); }
-    @media (max-width: 900px) { .featured { grid-template-columns: 1fr; } .featured .player { height: auto; } }
+    @media (max-width: 900px) { .featured { grid-template-columns: 1fr; } }
 
     /* TEAM / FOLLOW */
     .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
@@ -227,7 +227,7 @@
         <img src="https://img.youtube.com/vi/xDyiyqHvRBg/hqdefault.jpg" alt="" loading="lazy"><span class="play"><i class="fas fa-play"></i></span>
       </button>
       <div class="f-body">
-        <span class="f-badge">FEATURED · YEAR IN REVIEW</span>
+        <span class="f-badge">YEAR IN REVIEW</span>
         <h3>One year of work</h3>
         <p>A look back at everything built on Resurrection: Second Lives over the past year, from the first mechanics tests to finished maps and new character models.</p>
         <ul class="f-list">
